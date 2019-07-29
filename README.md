@@ -16,7 +16,11 @@ optional arguments:
 
 ### Style : Bar
 
-![Style : Split](https://user-images.githubusercontent.com/10562413/62057794-9630f800-b220-11e9-939a-df4d64c09c63.png)
+![Style : Bar](https://user-images.githubusercontent.com/10562413/62057794-9630f800-b220-11e9-939a-df4d64c09c63.png)
+
+### Color
+
+![Color](https://user-images.githubusercontent.com/10562413/62059109-e90baf00-b222-11e9-943d-ab5f5ab7a53c.png)
 
 ### Style : Split
 
@@ -24,7 +28,7 @@ optional arguments:
 
 ### Style : Blend
 
-![Style : Blend](https://user-images.githubusercontent.com/10562413/62058355-9978b380-b221-11e9-970d-21d08d762230.png)
+![Style : Blend](https://user-images.githubusercontent.com/10562413/62058650-1310a180-b222-11e9-9168-717e66c594e7.png)
 
 ### Style : Full
 
