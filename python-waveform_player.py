@@ -35,6 +35,13 @@ class videoFile(object):
         self.input_file_width = self.ffprobe_results['streams'][0]['width']
         self.input_file_height = self.ffprobe_results['streams'][0]['height']
 
+        sar = self.ffprobe_results['streams'][0]['sample_aspect_ratio']
+        sar = sar.split(":")
+        s = '/'
+        self.sar = s.join(sar)
+
+        #print (self.sar)
+
 
     def play_video_with_waveform(self):
 
@@ -42,7 +49,7 @@ class videoFile(object):
         if self.style == "full" : 
 
 
-            ffplay_cmd = '''{} -i {} -vf "waveform=mirror=1:graticule=green:flags=numbers+dots,scale={}x{}"'''.format(self.ffplay_path, self.input_file, self.input_file_width, self.input_file_height)
+            ffplay_cmd = '''{} -i {} -vf "waveform=display=parade:components={}:mirror=1:graticule=green:flags=numbers+dots,scale={}x{},setsar={}"'''.format(self.ffplay_path, self.input_file, self.components, self.input_file_width, self.input_file_height, self.sar)
  
 
         if self.style == "bar" : 
@@ -55,7 +62,7 @@ class videoFile(object):
             self.waveform_height = round(int(self.input_file_height)*0.30)
             self.wavefom_width = round(int(self.input_file_width)*0.70)
 
-            ffplay_cmd = '''{} -i {} -vf "split=3[a][b][c],[a]scale={}x{}[aa],[c]scale={}x{}[cc],[b]waveform=mirror=1:graticule=green:flags=numbers+dots,scale={}x{}[bb],[cc][bb]overlay=0:main_h-{}[cb],[cb][aa]overlay=0:0,setsar=1/1"'''.format(self.ffplay_path, self.input_file, self.video_width, self.video_height,  self.ffplay_width, self.ffplay_height, self.wavefom_width, self.waveform_height, self.waveform_height)
+            ffplay_cmd = '''{} -i {} -vf "split=3[a][b][c],[a]scale={}x{}[aa],[c]scale={}x{}[cc],[b]waveform=display=parade:components={}:mirror=1:graticule=green:flags=numbers+dots,scale={}x{}[bb],[cc][bb]overlay=0:main_h-{}[cb],[cb][aa]overlay=0:0,setsar={}"'''.format(self.ffplay_path, self.input_file, self.video_width, self.video_height,  self.ffplay_width, self.ffplay_height, self.components, self.wavefom_width, self.waveform_height, self.waveform_height, self.sar)
  
 
         if self.style == "split" : 
@@ -68,7 +75,7 @@ class videoFile(object):
             self.waveform_height = round(int(self.input_file_height)*0.50)
             self.wavefom_width = round(int(self.input_file_width)*0.50)
 
-            ffplay_cmd = '''{} -i {} -vf "split=3[a][b][c],[a]scale={}x{}[aa],[c]scale={}x{}[cc],[b]waveform=display=parade:components={}:mirror=1:graticule=green:flags=numbers+dots,scale={}x{}[bb],[cc][bb]overlay=0:main_h-{}[cb],[cb][aa]overlay=0:0,setsar=1/1"'''.format(self.ffplay_path, self.input_file, self.video_width, self.video_height,  self.ffplay_width, self.ffplay_height, self.components,self.wavefom_width, self.waveform_height, self.waveform_height)
+            ffplay_cmd = '''{} -i {} -vf "split=3[a][b][c],[a]scale={}x{}[aa],[c]scale={}x{}[cc],[b]waveform=display=parade:components={}:mirror=1:graticule=green:flags=numbers+dots,scale={}x{}[bb],[cc][bb]overlay=0:main_h-{}[cb],[cb][aa]overlay=0:0,setsar={}"'''.format(self.ffplay_path, self.input_file, self.video_width, self.video_height,  self.ffplay_width, self.ffplay_height, self.components,self.wavefom_width, self.waveform_height, self.waveform_height, self.sar)
             #ffplay_cmd = '''{} -i {} -vf "split=3[a][b][c],[a]scale={}x{}[aa],[c]scale={}x{}[cc],[b]scale={}x{},format=yuv420p10,waveform=display=parade:components=1:mirror=1:graticule=green:flags=numbers+dots[bb],[cc][bb]overlay=0:main_h-{}[cb],[cb][aa]overlay=0:0,setsar=1/1"'''.format(self.ffplay_path, self.input_file, self.video_width, self.video_height,  self.ffplay_width, self.ffplay_height, self.wavefom_width, self.waveform_height, self.waveform_height)
 
 
@@ -82,7 +89,7 @@ class videoFile(object):
             self.waveform_height = round(int(self.input_file_height)*0.30)
             self.wavefom_width = round(int(self.input_file_width)*0.70)
 
-            ffplay_cmd = '''{} -i {} -vf "split=2[a][b],[b]waveform=mirror=1:graticule=green:flags=numbers+dots:display=parade,scale={}x{}[bb],[a][bb]blend=all_mode='overlay':c0_opacity=7/10"'''.format(self.ffplay_path, self.input_file, self.input_file_width, self.input_file_height,  self.ffplay_width, self.ffplay_height, self.wavefom_width, self.waveform_height, self.waveform_height)
+            ffplay_cmd = '''{} -i {} -vf "split=2[a][b],[b]waveform=display=parade:components={}:mirror=1:graticule=green:flags=numbers+dots:display=parade,scale={}x{},setsar={}[bb],[a][bb]blend=all_mode='overlay':c0_opacity=7/10"'''.format(self.ffplay_path, self.input_file, self.components, self.input_file_width, self.input_file_height,  self.ffplay_width, self.ffplay_height, self.wavefom_width, self.waveform_height, self.waveform_height, self.sar)
  
 
         print(ffplay_cmd)
@@ -93,7 +100,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', dest='input', help="INPUT FILE")
-    parser.add_argument('-style', dest='style', help="Style : full, bar, split, blend", default = "full")
+    parser.add_argument('-style', dest='style', help="Style : bar, split, blend, full", default = "bar")
     parser.add_argument('-color', dest='color', action='store_true', help="Show color")
 
     args = parser.parse_args()

@@ -10,7 +10,7 @@ usage: python-waveform_player.py [-h] [-i INPUT] [-style STYLE] [-color]
 optional arguments:
   -h, --help    show this help message and exit
   -i INPUT      INPUT FILE
-  -style STYLE  Style : full, bar, split, blend
+  -style STYLE  Style : bar, split, blend, full
   -color        Show color
 ```
 
